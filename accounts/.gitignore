@@ -15,6 +15,7 @@ target/
 
 ### IntelliJ IDEA ###
 .idea
+.idea/*
 *.iws
 *.iml
 *.ipr
@@ -73,6 +74,15 @@ build/
 # .idea/modules
 # *.iml
 # *.ipr
+
+# Ignore IntelliJ IDEA project files
+.idea/
+.idea/compiler.xml
+.idea/workspace.xml
+.idea/libraries/
+.idea/shelf/
+.idea/tasks.xml
+.idea/vcs.xml
 
 # CMake
 cmake-build-*/
