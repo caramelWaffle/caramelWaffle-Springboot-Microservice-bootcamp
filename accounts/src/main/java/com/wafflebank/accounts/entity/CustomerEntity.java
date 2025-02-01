@@ -10,13 +10,11 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-@AllArgsConstructor
-@NoArgsConstructor
-public class Account extends BaseEntity {
+public class CustomerEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long accountNumber;
     private long customerId;
-    private String accountType;
+    private String name;
+    private String email;
     private String mobileNumber;
 }

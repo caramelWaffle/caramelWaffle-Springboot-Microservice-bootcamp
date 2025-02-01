@@ -1,10 +1,13 @@
 package com.wafflebank.accounts.repository;
 
-import com.wafflebank.accounts.entity.Customer;
+import com.wafflebank.accounts.entity.CustomerEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface CustomerRepository extends JpaRepository<Customer, Long> {
+import java.util.Optional;
 
+@Repository
+public interface CustomerRepository extends JpaRepository<CustomerEntity, Long> {
+
+    Optional<CustomerEntity> findByMobileNumber(String mobileNumber);
 }

@@ -1,11 +1,15 @@
 package com.wafflebank.accounts.model.network;
 
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import org.springframework.http.HttpStatus;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
-@Data @AllArgsConstructor
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class ResponseData {
+    private String statusCode;
     private String message;
-    private HttpStatus statusCode;
 }
