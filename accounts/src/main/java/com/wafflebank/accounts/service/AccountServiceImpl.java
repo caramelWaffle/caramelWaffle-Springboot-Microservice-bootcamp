@@ -3,7 +3,10 @@ package com.wafflebank.accounts.service;
 import com.wafflebank.accounts.entity.AccountEntity;
 import com.wafflebank.accounts.entity.CustomerEntity;
 import com.wafflebank.accounts.exception.CustomerExistException;
+import com.wafflebank.accounts.exception.ResourceNotFoundException;
+import com.wafflebank.accounts.mapper.AccountDataMapper;
 import com.wafflebank.accounts.mapper.CustomerDataMapper;
+import com.wafflebank.accounts.model.account.AccountData;
 import com.wafflebank.accounts.model.account.AccountType;
 import com.wafflebank.accounts.model.customer.CustomerData;
 import com.wafflebank.accounts.repository.AccountRepository;
@@ -32,19 +35,69 @@ public class AccountServiceImpl implements AccountService {
             customerToSave.setCreatedAt(LocalDateTime.now());
             customerToSave.setCreatedBy("waffle");
             CustomerEntity customerEntity = customerRepository.save(customerToSave);
-
-            AccountEntity accountEntity = new AccountEntity();
-            accountEntity.setCustomerId(customerEntity.getCustomerId());
-            accountEntity.setAccountNumber(generateRandomAccountNumber());
-            accountEntity.setMobileNumber(customerEntity.getMobileNumber());
-            accountEntity.setAccountType(AccountType.SAVING.name());
-            accountEntity.setCreatedAt(LocalDateTime.now());
-            accountEntity.setCreatedBy("waffle");
-            accountRepository.save(accountEntity);
+            accountRepository.save(createAccountEntity(customerEntity));
         }
     }
 
-    public static long generateRandomAccountNumber() {
+    @Override
+    public AccountData getAccount(Long accountNumber) {
+        AccountEntity accountEntity = accountRepository.findById(accountNumber).orElseThrow(
+                () -> new ResourceNotFoundException("Account not found")
+        );
+        return AccountDataMapper.toData(accountEntity);
+    }
+
+    @Override
+    public AccountData getAccountByMobileNumber(String mobileNumber) {
+        AccountEntity accountEntity = accountRepository.findByMobileNumber(mobileNumber).orElseThrow(
+                () -> new ResourceNotFoundException("Account not found")
+        );
+        return AccountDataMapper.toData(accountEntity);
+    }
+
+    @Override
+    public boolean updateAccount(AccountData account) {
+        accountRepository.findById(account.getAccountNumber()).orElseThrow(
+                () -> new ResourceNotFoundException("Account " + account.getAccountNumber() + " not found")
+        );
+        AccountEntity accountToUpdate = AccountDataMapper.toEntity(account);
+        accountToUpdate.setUpdatedAt(LocalDateTime.now());
+        accountToUpdate.setUpdatedBy("waffle");
+        accountRepository.save(accountToUpdate);
+        return true;
+    }
+
+    @Override
+    public boolean deleteAccount(Long accountNumber) {
+        accountRepository.findById(accountNumber).orElseThrow(
+                () -> new ResourceNotFoundException("Account " + accountNumber + " not found")
+        );
+        accountRepository.deleteById(accountNumber);
+        return true;
+    }
+
+    @Override
+    public boolean deleteAccountByCustomerId(Long customerId) {
+        accountRepository.findByCustomerId(customerId).orElseThrow(
+                () -> new ResourceNotFoundException("Customer " + customerId + " not found")
+        );
+        accountRepository.deleteByCustomerId(customerId);
+        return true;
+    }
+
+    private AccountEntity createAccountEntity(CustomerEntity customerEntity) {
+        AccountEntity accountEntity = new AccountEntity();
+        accountEntity.setCustomerId(customerEntity.getCustomerId());
+        accountEntity.setAccountNumber(generateRandomAccountNumber());
+        accountEntity.setMobileNumber(customerEntity.getMobileNumber());
+        accountEntity.setAccountType(AccountType.SAVING.name());
+        accountEntity.setCreatedAt(LocalDateTime.now());
+        accountEntity.setCreatedBy("waffle");
+        accountEntity.setBranch("Head Office");
+        return accountEntity;
+    }
+
+    public long generateRandomAccountNumber() {
         Random random = new Random();
         return 1000000000L + random.nextInt(900000000);  // Generates a number between 1000000000 and 1999999999
     }

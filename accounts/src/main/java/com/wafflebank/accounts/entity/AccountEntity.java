@@ -13,4 +13,5 @@ public class AccountEntity extends BaseEntity {
     private long customerId;
     private String accountType;
     private String mobileNumber;
+    private String branch;
 }

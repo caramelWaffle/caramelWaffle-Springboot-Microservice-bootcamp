@@ -2,12 +2,16 @@ package com.wafflebank.accounts.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
-import lombok.*;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 
 @MappedSuperclass
-@Data @Getter
+@Data
+@Getter
 @Setter
 @ToString
 public class BaseEntity {
