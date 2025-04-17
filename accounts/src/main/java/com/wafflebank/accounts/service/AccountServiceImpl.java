@@ -32,8 +32,6 @@ public class AccountServiceImpl implements AccountService {
             );
         } else {
             CustomerEntity customerToSave = CustomerDataMapper.toEntity(customer);
-            customerToSave.setCreatedAt(LocalDateTime.now());
-            customerToSave.setCreatedBy("waffle");
             CustomerEntity customerEntity = customerRepository.save(customerToSave);
             accountRepository.save(createAccountEntity(customerEntity));
         }
@@ -91,8 +89,6 @@ public class AccountServiceImpl implements AccountService {
         accountEntity.setAccountNumber(generateRandomAccountNumber());
         accountEntity.setMobileNumber(customerEntity.getMobileNumber());
         accountEntity.setAccountType(AccountType.SAVING.name());
-        accountEntity.setCreatedAt(LocalDateTime.now());
-        accountEntity.setCreatedBy("waffle");
         accountEntity.setBranch("Head Office");
         return accountEntity;
     }
