@@ -21,3 +21,4 @@
 - Define a custom exception class with appropriate `HttpStatus`
 - Implement global exception handler using `@ControllerAdvice`
 - Adding a default auditor for createdBy, updatedBy, createdAt, and updatedAt using `AuditorAware`
+- Introduction to documentation of REST APIs using `Springdoc` openapi
