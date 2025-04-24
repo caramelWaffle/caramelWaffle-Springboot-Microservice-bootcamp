@@ -26,13 +26,13 @@ public class LoanData {
     @NotNull
     private String loanNumber;
 
-    @Schema(description = "Type of the loan", example = "TODO")
+    @Schema(description = "Type of the loan", example = "Car Loan")
     @NotNull
     private String loanType;
 
-    @Schema(description = "AmountPaid of the loan", example = "TODO")
+    @Schema(description = "AmountPaid of the loan", example = "100")
     private int amountPaid;
 
-    @Schema(description = "outStandingAmount of the loan", example = "TODO")
+    @Schema(description = "outStandingAmount of the loan", example = "50000")
     private int outStandingAmount;
 }

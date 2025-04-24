@@ -67,4 +67,13 @@ public class LoanServiceImpl implements LoanService {
         loanRepository.deleteById(loanData.getLoanId());
         return true;
     }
+
+    @Override
+    public boolean deleteByMobileNumber(String mobileNumber) {
+        loanRepository.findByMobileNumber(mobileNumber)
+                .orElseThrow(() -> new ResourceNotFoundException("Loan not found"));
+
+        loanRepository.deleteByMobileNumber(mobileNumber);
+        return true;
+    }
 }

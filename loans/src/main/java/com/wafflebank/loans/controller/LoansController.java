@@ -111,4 +111,15 @@ public class LoansController {
                 .build();
         return ResponseEntity.status(status).body(body);
     }
+
+    @DeleteMapping("/deleteByMobileNumber")
+    public ResponseEntity<ResponseData> deleteByMobileNumber(@RequestParam String mobileNumber) {
+        boolean isSuccess = loanService.deleteByMobileNumber(mobileNumber);
+        HttpStatus status = isSuccess ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR;
+        ResponseData body = ResponseData.builder()
+                .statusCode(String.valueOf(status.value()))
+                .message(status.getReasonPhrase())
+                .build();
+        return ResponseEntity.status(status).body(body);
+    }
 }

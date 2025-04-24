@@ -10,4 +10,5 @@ public interface LoanService {
     LoanData findByMobileNumber(String mobileNumber);
     boolean updateLoan(LoanData loanData);
     boolean deleteLoan(LoanData loanData);
+    boolean deleteByMobileNumber(String mobileNumber);
 }
