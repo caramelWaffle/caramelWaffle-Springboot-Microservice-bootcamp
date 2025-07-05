@@ -45,7 +45,10 @@
   - Building image using `mvn spring-boot:build-image`
   - Run image using `docker run -d -p 8081:8090 kodomochi/loans:v1`
   - Size smaller compared to DockerFile
-- GoogleJib to generate Docker Images
+  - Recommended on large projects
+- **GoogleJib** to generate Docker Images
   - Add jib-marven-plugin to `pom.xml` [https://github.com/GoogleContainerTools/jib/tree/master/jib-maven-plugin]
   - Generate image using `mvn compile jib:dockerBuild`
   - Run image using `docker run -d -p 9000:9000 kodomochi/card:v1`
+  - Lightweight, recommend on local system
+- Pushing Docker images from local to remote using `docker image push docker.io/kodomochi/loans:v1`
