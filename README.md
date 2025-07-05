@@ -29,8 +29,9 @@
 - Definition of Containers, Docker
   - A container is a loosely isolated environment that allows us to build and run software packages (container images)
 - **DockerFile** to generate Docker Images:
+  - Adding packaging `jar` to `pom.xml`
   - Generate Jar package using `mvn clean install` and .jar file via `java -jar target/accounts-0.0.1-SNAPSHOT.jar`
-    - Writing Dockerfile
+  - Writing Dockerfile
     - Start with base image containing Java runtime [`FROM openjdk:17-jdk-slim`]
     - Information about image maintainer [`LABEL maintainer`]
     - Add the application's jar to image [`COPY`]
@@ -39,8 +40,12 @@
     - Run image using `docker run -d -p 8080:8080 kodomochi/accounts:v1`
     - Run the existing  container `docker start {containerId}`
 - **BuildPacks** to generate Docker Images
+  - Adding packaging `jar` to `pom.xml`
   - Adding image name on `pom.xml`
   - Building image using `mvn spring-boot:build-image`
   - Run image using `docker run -d -p 8081:8090 kodomochi/loans:v1`
   - Size smaller compared to DockerFile
-- GoogleJib
+- GoogleJib to generate Docker Images
+  - Add jib-marven-plugin to `pom.xml` [https://github.com/GoogleContainerTools/jib/tree/master/jib-maven-plugin]
+  - Generate image using `mvn compile jib:dockerBuild`
+  - Run image using `docker run -d -p 9000:9000 kodomochi/card:v1`
