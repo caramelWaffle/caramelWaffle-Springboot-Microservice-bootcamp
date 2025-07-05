@@ -52,3 +52,13 @@
   - Run image using `docker run -d -p 9000:9000 kodomochi/card:v1`
   - Lightweight, recommend on local system
 - Pushing Docker images from local to remote using `docker image push docker.io/kodomochi/loans:v1`
+- **Docker Compose** define and run multi-container Docker images via YAML file
+  - Creating `docker-compose.yml` file
+    - Config microservices
+      - image: kodomochi/accounts:v1
+      - container_name: account-microservice
+      - ports
+      - deploy
+      - networks
+      - driver: "bridge" allows microservice can communicate with each other
+    - Running all microservices containers using `docker compose up`
