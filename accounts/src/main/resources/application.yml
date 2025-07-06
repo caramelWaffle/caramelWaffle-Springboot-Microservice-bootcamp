@@ -13,5 +13,6 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: update
+
 build:
-  version: "2.0"
+  version: "2.0 (DEV)"

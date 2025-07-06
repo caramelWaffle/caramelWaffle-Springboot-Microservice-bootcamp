@@ -68,3 +68,6 @@
 
 - Reading configurations on application.yml using @Value annotation
 - Reading configurations using `Environment` interface
+- Grouping configuration properties using **Profile**
+  - Create separate env and configuration of `appliction.yml` file
+  - Active a difference profile via arg `--spring.profiles.active=uat` or `mvn spring-boot:run -Dspring-boot.run.profiles=uat`
