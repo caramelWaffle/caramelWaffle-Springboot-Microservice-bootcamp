@@ -95,7 +95,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<image>
-						<name>kodomochi/${project.artifactId}:v1</name>
+						<name>kodomochi/${project.artifactId}:v2</name>
 					</image>
 					<excludes>
 						<exclude>

@@ -1,6 +1,7 @@
 package com.wafflebank.accounts.controller;
 
 import com.wafflebank.accounts.model.account.AccountData;
+import com.wafflebank.accounts.model.build.BuildInfo;
 import com.wafflebank.accounts.model.customer.CustomerData;
 import com.wafflebank.accounts.model.network.ResponseData;
 import com.wafflebank.accounts.service.AccountService;
@@ -11,6 +12,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,9 +22,12 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "AccountsController", description = "Controller for managing account operations")
 @RestController
 @RequestMapping(path = "/api", produces = {MediaType.APPLICATION_JSON_VALUE})
-@AllArgsConstructor
 public class AccountsController {
 
+    @Value("${build.version}")
+    private String buildVersion;
+
+    @Autowired
     private AccountService accountService;
 
     @Operation(
@@ -199,6 +205,29 @@ public class AccountsController {
         ResponseData body = ResponseData.builder()
                 .statusCode(String.valueOf(status.value()))
                 .message(status.getReasonPhrase())
+                .build();
+
+        return ResponseEntity.status(status).body(body);
+    }
+
+    @Operation(
+            description = "Get build information",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Account successfully deleted by customer ID",
+                            content = @Content(schema = @Schema(implementation = ResponseData.class))
+                    ),
+                    @ApiResponse(responseCode = "400", description = "Invalid customer ID"),
+                    @ApiResponse(responseCode = "500", description = "Internal server error")
+            }
+    )
+    @GetMapping("/build-info")
+    public ResponseEntity<BuildInfo> getBuildInformation() {
+        HttpStatus status = HttpStatus.OK;
+
+        BuildInfo body = BuildInfo.builder()
+                .version(buildVersion)
                 .build();
 
         return ResponseEntity.status(status).body(body);

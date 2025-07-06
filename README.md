@@ -62,3 +62,8 @@
       - networks
       - driver: "bridge" allows microservice can communicate with each other
     - Running all microservices containers using `docker compose up`
+
+---
+### Chapter 3: Configuration management in microservices
+
+- Read configuration on application.yml using @Value annotation
