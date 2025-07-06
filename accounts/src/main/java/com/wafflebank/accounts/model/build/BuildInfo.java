@@ -9,4 +9,5 @@ import lombok.Data;
 @Builder
 public class BuildInfo {
     String version;
+    String javaVersion;
 }

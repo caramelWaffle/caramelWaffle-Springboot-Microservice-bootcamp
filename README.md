@@ -66,4 +66,5 @@
 ---
 ### Chapter 3: Configuration management in microservices
 
-- Read configuration on application.yml using @Value annotation
+- Reading configurations on application.yml using @Value annotation
+- Reading configurations using `Environment` interface
