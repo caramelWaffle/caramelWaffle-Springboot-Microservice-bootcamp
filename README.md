@@ -66,8 +66,11 @@
 ---
 ### Chapter 3: Configuration management in microservices
 
-- Reading configurations on application.yml using @Value annotation
+- Reading single configurations on application.yml using `@Value` annotation
+- Reading group of configurations on application.yml using `@ConfigurationProperties` annotation
 - Reading configurations using `Environment` interface
 - Grouping configuration properties using **Profile**
   - Create separate env and configuration of `appliction.yml` file
   - Active a difference profile via arg `--spring.profiles.active=uat` or `mvn spring-boot:run -Dspring-boot.run.profiles=uat`
+- **Spring Cloud Config** centralized configuration server for facilitate, manage and distribution to multiple applications
+  - Create cloud config server using *Spring Cloud Config*
