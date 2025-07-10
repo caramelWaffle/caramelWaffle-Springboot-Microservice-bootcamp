@@ -75,4 +75,8 @@
 - **Spring Cloud Config** centralized configuration server for facilitate, manage and distribution to multiple applications
   - Create cloud config server using *Spring Cloud Config*
   - Add annotation `@EnableConfigServer` To Application Class
-  - 
+    - **Local Config**
+      - Adding local config file to `src/main/resources/config`
+      - Using local config file by `spring.profiles.include=native` and set file path
+        `spring.cloud.config.server.native.search-locations="classpath:/config"`
+      - Access configuration value via `http://localhost:8071/accounts/prod`
