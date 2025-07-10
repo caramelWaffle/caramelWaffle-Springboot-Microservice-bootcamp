@@ -74,3 +74,5 @@
   - Active a difference profile via arg `--spring.profiles.active=uat` or `mvn spring-boot:run -Dspring-boot.run.profiles=uat`
 - **Spring Cloud Config** centralized configuration server for facilitate, manage and distribution to multiple applications
   - Create cloud config server using *Spring Cloud Config*
+  - Add annotation `@EnableConfigServer` To Application Class
+  - 
