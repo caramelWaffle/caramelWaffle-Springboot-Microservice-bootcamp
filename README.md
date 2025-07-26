@@ -89,3 +89,8 @@
   - Enable refresh endpoint by adding `management.endpoints.web.exposure.include=*` to `application.yml`
   - Enable `@RefreshScope` to the class that needs to refresh configurations
   - Refresh configurations using `POST http://localhost:808080/actuator/refresh`
+- Refresh multiple microservice configurations at runtime using Spring Cloud Bus
+  - Add `spring-cloud-starter-bus-amqp` dependency to `pom.xml`
+  - Install RabbitMQ via Docker
+  - Enable RabbitMQ in `application.yml`
+  - Publish refresh event using `POST http://localhost:8080/actuator/bus-refresh`
