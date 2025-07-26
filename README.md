@@ -100,3 +100,4 @@
   - Access readiness endpoint via `http://localhost:8071/actuator/health/readiness`
   - Access liveness endpoint via `http://localhost:8071/actuator/health/liveness`
 - Adding healthcheck on Dockerfile to ensure the required microservice is ready before starting other microservices
+- Generate new images using **GoogleJib**
