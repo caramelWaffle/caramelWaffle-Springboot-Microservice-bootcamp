@@ -84,4 +84,8 @@
       - Adding remote config to GitHub repository
       - Using remote config file by `spring.profiles.active=git` and set git url
         `spring.cloud.config.server.git.uri=https://github.com/caramelWaffle/wafflebank-config.git
-
+- Refresh configurations at runtime using refresh endpoint
+  - Add `spring-boot-starter-actuator` dependency to `pom.xml`
+  - Enable refresh endpoint by adding `management.endpoints.web.exposure.include=*` to `application.yml`
+  - Enable `@RefreshScope` to the class that needs to refresh configurations
+  - Refresh configurations using `POST http://localhost:808080/actuator/refresh`
