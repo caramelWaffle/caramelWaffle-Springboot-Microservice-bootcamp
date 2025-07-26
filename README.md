@@ -80,3 +80,8 @@
       - Using local config file by `spring.profiles.include=native` and set file path
         `spring.cloud.config.server.native.search-locations="classpath:/config"`
       - Access configuration value via `http://localhost:8071/accounts/prod`
+    - **Remote Config - GitHub**
+      - Adding remote config to GitHub repository
+      - Using remote config file by `spring.profiles.active=git` and set git url
+        `spring.cloud.config.server.git.uri=https://github.com/caramelWaffle/wafflebank-config.git
+
