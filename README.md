@@ -94,3 +94,8 @@
   - Install RabbitMQ via Docker
   - Enable RabbitMQ in `application.yml`
   - Publish refresh event using `POST http://localhost:8080/actuator/bus-refresh`
+- Checking configuration microservice health, readiness and liveness using Spring Boot Actuator
+  - Enable actuator endpoints in `application.yml`
+  - Access health endpoint via `http://localhost:8071/actuator/health`
+  - Access readiness endpoint via `http://localhost:8071/actuator/health/readiness`
+  - Access liveness endpoint via `http://localhost:8071/actuator/health/liveness`
