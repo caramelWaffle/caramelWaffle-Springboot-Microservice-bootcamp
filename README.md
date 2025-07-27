@@ -114,4 +114,6 @@
     - Set `spring.datasource.url=jdbc:mysql://localhost:3306/account-db`
     - Set `spring.datasource.username=root`
     - Set `spring.datasource.password=root`
+  - Update docker image 
+    - build image using `mvn compile jib:dockerBuild`
 
