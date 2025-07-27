@@ -117,3 +117,24 @@
   - Update docker image 
     - build image using `mvn compile jib:dockerBuild`
 
+---
+### Chapter 5: Service Discovery and Service Registry
+- **Service Discovery**: `Spring Cloud Netflix Eureka`
+  - Automatically detects and registers services in a microservices architecture.
+  - Client Side Discovery: Clients query the service registry to find service instances.
+  - Server Side Discovery: Clients send requests to a load balancer, which queries the service registry and forwards the request to an available service instance.
+- **Service Registry**: A central database that stores the network locations of service instances.
+- **Load Balancing**: `Spring Cloud Load Balancer`
+  - Distributes requests across multiple service instances to ensure high availability and reliability.
+- **Feign Client** : `Netfix Feign Client`
+  - A declarative HTTP client that simplifies service-to-service communication.
+- Implement
+  - Create discovery server using Eureka
+    - Add `spring-cloud-starter-netflix-eureka-server` dependency to `pom.xml`
+    - Add `@EnableEurekaServer` annotation to the main application class
+    - Configure Eureka server in `application.yml` or config server
+      - Set `eureka.client.register-with-eureka=false`
+      - Set `eureka.client.fetch-registry=false`
+      - Set `eureka.server.enable-self-preservation=false`
+      - set `eureka.client.service-url.defaultZone=http://${eureka.instance.hostname}:${server.port}/eureka/`
+    - access Eureka server via `http://localhost:8070/`
