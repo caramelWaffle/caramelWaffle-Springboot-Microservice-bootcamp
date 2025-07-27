@@ -91,7 +91,7 @@
   - Refresh configurations using `POST http://localhost:808080/actuator/refresh`
 - Refresh multiple microservice configurations at runtime using Spring Cloud Bus
   - Add `spring-cloud-starter-bus-amqp` dependency to `pom.xml`
-  - Install RabbitMQ via Docker
+  - Install RabbitMQ via Docker `docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:4-management`
   - Enable RabbitMQ in `application.yml`
   - Publish refresh event using `POST http://localhost:8080/actuator/bus-refresh`
 - Checking configuration microservice health, readiness and liveness using Spring Boot Actuator
@@ -101,3 +101,17 @@
   - Access liveness endpoint via `http://localhost:8071/actuator/health/liveness`
 - Adding healthcheck on Dockerfile to ensure the required microservice is ready before starting other microservices
 - Generate new images using **GoogleJib**
+
+---
+### Chapter 4: Using MySQL Database in Microservices
+
+- Install MySQL via Docker
+  - Create a new MySQL Database 
+    - account db `docker run -p 3306:3306 --name account-db -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=account-db -d mysql:latest`
+    - loan db `docker run -p 3307:3306 --name loan-db -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=loan-db -d mysql:latest`
+    - loan db `docker run -p 3308:3306 --name card-db -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=card-db -d mysql:latest`
+  - Update application.yml to connect to MySQL 
+    - Set `spring.datasource.url=jdbc:mysql://localhost:3306/account-db`
+    - Set `spring.datasource.username=root`
+    - Set `spring.datasource.password=root`
+
