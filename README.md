@@ -138,3 +138,11 @@
       - Set `eureka.server.enable-self-preservation=false`
       - set `eureka.client.service-url.defaultZone=http://${eureka.instance.hostname}:${server.port}/eureka/`
     - access Eureka server via `http://localhost:8070/`
+    - Register microservices to Eureka server
+    - Configure Eureka client in `application.yml` to send service information to discovery server
+      - set `management.info.env.enabled=true`
+      - set `eureka.instance.prefer-ip-address=true`
+      - set `eureka.client.fetch-registry=true`
+      - set `eureka.client.register-with-eureka=true`
+      - set `eureka.client.service-url.defaultZone=http://localhost:8070/eureka/`
+  
