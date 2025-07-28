@@ -77,7 +77,7 @@ services:
 
   # Config-Server Microservice
   configserver:
-    image: kodomochi/configserver:v3
+    image: kodomochi/configserver:v4
     container_name: configserver-microservice
     ports:
       - "8071:8071"
@@ -99,14 +99,42 @@ services:
     environment:
       SPRING_RABBITMQ_HOST: "rabbit"
 
+  # Discovery Server
+  discoveryserver:
+    image: kodomochi/discoveryserver:v4
+    container_name: discoveryserver-microservice
+    ports:
+      - "8070:8070"
+    depends_on:
+      configserver:
+        condition: service_healthy
+    healthcheck:
+      test: "curl --fail --silent http://localhost:8071/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - waffle
+    environment:
+      SPRING_APPLICATION_NAME: discoveryserver
+      SPRING_CONFIG_IMPORT: "configserver:http://configserver:8071/"
+      SPRING_PROFILES_ACTIVE: default # default, dev, uat, prod
+
   # Account Microservice
   accounts:
-    image: kodomochi/accounts:v3
+    image: kodomochi/accounts:v4
     container_name: account-microservice
     ports:
       - "8080:8080"
     depends_on:
       configserver:
+        condition: service_healthy
+      discoveryserver:
         condition: service_healthy
     deploy:
       resources:
@@ -120,15 +148,18 @@ services:
       SPRING_CONFIG_IMPORT: "configserver:http://configserver:8071/"
       SPRING_PROFILES_ACTIVE: uat # default, dev, uat, prod
       SPRING_RABBITMQ_HOST: "rabbit"
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://discoveryserver:8070/eureka/"
 
 # Loan Microservice
   loans:
-    image: kodomochi/loans:v3
+    image: kodomochi/loans:v4
     container_name: loans-microservice
     ports:
       - "8090:8090"
     depends_on:
       configserver:
+        condition: service_healthy
+      discoveryserver:
         condition: service_healthy
     deploy:
       resources:
@@ -142,15 +173,18 @@ services:
       SPRING_CONFIG_IMPORT: "configserver:http://configserver:8071/"
       SPRING_PROFILES_ACTIVE: uat # default, dev, uat, prod
       SPRING_RABBITMQ_HOST: "rabbit"
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://discoveryserver:8070/eureka/"
 
   # Card Microservice
   cards:
-    image: kodomochi/card:v3
+    image: kodomochi/card:v4
     container_name: cards-microservice
     ports:
       - "9000:9000"
     depends_on:
       configserver:
+        condition: service_healthy
+      discoveryserver:
         condition: service_healthy
     deploy:
       resources:
@@ -164,6 +198,7 @@ services:
       SPRING_CONFIG_IMPORT: "configserver:http://configserver:8071/"
       SPRING_PROFILES_ACTIVE: uat # default, dev, uat, prod
       SPRING_RABBITMQ_HOST: "rabbit"
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://discoveryserver:8070/eureka/"
 
 networks:
   waffle:
