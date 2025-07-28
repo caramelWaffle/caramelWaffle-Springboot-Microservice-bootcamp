@@ -10,5 +10,5 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface CardsFeignClient {
 
     @GetMapping(value = "/api/findByMobileNumber", consumes = "application/json")
-    public ResponseEntity<CardData> findCardByMobileNumber(@RequestParam String mobileNumber);
+    ResponseEntity<CardData> findCardByMobileNumber(@RequestParam String mobileNumber);
 }
