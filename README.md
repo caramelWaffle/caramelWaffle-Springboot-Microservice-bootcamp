@@ -153,3 +153,4 @@
       - Define methods with `@GetMapping`, `@PostMapping`, etc.
       - Create data transfer objects (DTOs) for request and response
     - Use Feign Client in service classes to call other microservices
+  - Build image using `mvn compile jib:dockerBuild` 
