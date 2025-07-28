@@ -145,4 +145,12 @@
       - set `eureka.client.fetch-registry=true`
       - set `eureka.client.register-with-eureka=true`
       - set `eureka.client.service-url.defaultZone=http://localhost:8070/eureka/`
+  - Communicate between microservices using **Feign Client**
+    - Add `spring-cloud-starter-openfeign` dependency to `pom.xml`
+    - Enable Feign Client in the main application class using `@EnableFeignClients`
+    - Create Feign Client interface for each microservice
+      - Use `@FeignClient(name = "service-name")` annotation
+      - Define methods with `@GetMapping`, `@PostMapping`, etc.
+      - Create data transfer objects (DTOs) for request and response
+    - Use Feign Client in service classes to call other microservices
   
