@@ -6,6 +6,8 @@ import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 
+import java.time.LocalDateTime;
+
 @SpringBootApplication
 public class GatewayserverApplication {
 
@@ -20,6 +22,8 @@ public class GatewayserverApplication {
                         predicateSpec.path("/wafflebank/accounts-service/**")
                                 .filters(gatewayFilterSpec ->
                                         gatewayFilterSpec.rewritePath("/wafflebank/accounts-service/(?<segment>.*)", "/${segment}")
+                                                .addRequestHeader("X-Request-Time", LocalDateTime.now().toString())
+                                                .addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
                                 )
                                 .uri("lb://ACCOUNTS")
                 )
@@ -27,6 +31,8 @@ public class GatewayserverApplication {
                         predicateSpec.path("/wafflebank/loans-service/**")
                                 .filters(gatewayFilterSpec ->
                                         gatewayFilterSpec.rewritePath("/wafflebank/loans-service/(?<segment>.*)", "/${segment}")
+                                                .addRequestHeader("X-Request-Time", LocalDateTime.now().toString())
+                                                .addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
                                 )
                                 .uri("lb://LOANS")
                 )
@@ -34,6 +40,8 @@ public class GatewayserverApplication {
                         predicateSpec.path("/wafflebank/cards-service/**")
                                 .filters(gatewayFilterSpec ->
                                         gatewayFilterSpec.rewritePath("/wafflebank/cards-service/(?<segment>.*)", "/${segment}")
+                                                .addRequestHeader("X-Request-Time", LocalDateTime.now().toString())
+                                                .addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
                                 )
                                 .uri("lb://CARD")
                 )
