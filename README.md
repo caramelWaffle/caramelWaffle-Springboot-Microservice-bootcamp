@@ -220,3 +220,11 @@
               .build();
       }
       ```
+- Implement filter `addRequestHeader` to add custom headers to the request
+- Implement filter `addResponseHeader` to add custom headers to the response
+- Implement filter `modifyResponseBody` to modify the response body
+- Create a custom filter to write correlation ID to the response header
+    - Use `ServerWebExchange` to access the request and response
+    - Generate a unique correlation ID for each request
+    - Add the correlation ID to the response header
+    - Log the correlation ID for tracing using Logger
