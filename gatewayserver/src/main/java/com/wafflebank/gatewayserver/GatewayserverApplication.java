@@ -1,0 +1,43 @@
+package com.wafflebank.gatewayserver;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.gateway.route.RouteLocator;
+import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
+import org.springframework.context.annotation.Bean;
+
+@SpringBootApplication
+public class GatewayserverApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(GatewayserverApplication.class, args);
+    }
+
+    @Bean
+    public RouteLocator waffleBankRouteConfig(RouteLocatorBuilder routeLocatorBuilder) {
+        return routeLocatorBuilder.routes()
+                .route(predicateSpec ->
+                        predicateSpec.path("/wafflebank/accounts-service/**")
+                                .filters(gatewayFilterSpec ->
+                                        gatewayFilterSpec.rewritePath("/wafflebank/accounts-service/(?<segment>.*)", "/${segment}")
+                                )
+                                .uri("lb://ACCOUNTS")
+                )
+                .route(predicateSpec ->
+                        predicateSpec.path("/wafflebank/loans-service/**")
+                                .filters(gatewayFilterSpec ->
+                                        gatewayFilterSpec.rewritePath("/wafflebank/loans-service/(?<segment>.*)", "/${segment}")
+                                )
+                                .uri("lb://LOANS")
+                )
+                .route(predicateSpec ->
+                        predicateSpec.path("/wafflebank/cards-service/**")
+                                .filters(gatewayFilterSpec ->
+                                        gatewayFilterSpec.rewritePath("/wafflebank/cards-service/(?<segment>.*)", "/${segment}")
+                                )
+                                .uri("lb://CARD")
+                )
+                .build();
+    }
+
+}

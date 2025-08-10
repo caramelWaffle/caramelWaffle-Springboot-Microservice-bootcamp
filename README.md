@@ -203,4 +203,20 @@
         spring.cloud.gateway.server.webflux.discovery.locator.lower-case-service-id=true
     - Start the gateway server on latest service to receive the latest service information from Eureka server
     - Access the gateway server via `http://localhost:8072/`
-    - Access the account service via `http://localhost:8072/ACCOUNTS`, example http://localhost:8072/ACCOUNTS/api/create
+    - Access the account service via `http://localhost:8072/accounts`, example http://localhost:8072/accounts/api/create
+- Implement dynamic routing using `RouteLocator`
+    - Create a `@Configuration` class to define routes
+    - Use `RouteLocatorBuilder` to create routes dynamically
+    - Define predicates and filters for each route
+    - Example:
+      ```java
+      @Bean
+      public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
+          return builder.routes()
+              .route("account_route", r -> r.path("/accounts/**")
+                  .uri("lb://accounts-service"))
+              .route("loan_route", r -> r.path("/loans/**")
+                  .uri("lb://loans-service"))
+              .build();
+      }
+      ```
