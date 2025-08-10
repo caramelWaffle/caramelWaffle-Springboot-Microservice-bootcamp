@@ -228,3 +228,11 @@
     - Generate a unique correlation ID for each request
     - Add the correlation ID to the response header
     - Log the correlation ID for tracing using Logger
+- Build image using `mvn compile jib:dockerBuild`
+- Push the image to DockerHub using ` docker image push docker.io/kodomochi/gatewayserver:v6`
+- Update `docker-compose.yml` to include the API Gateway service
+    - Add the gateway service configuration
+    - Set the image to `kodomochi/gatewayserver:v6`
+    - Set the container name to `gateway-server`
+    - Set the ports to `8072:8072`
+    - Set the networks to `wafflebank-network`

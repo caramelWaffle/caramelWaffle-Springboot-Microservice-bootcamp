@@ -33,7 +33,7 @@ public class CustomerServiceImpl implements CustomerService {
         );
 
         AccountEntity accountEntity = accountRepository.findByCustomerId(customerEntity.getCustomerId()).orElseThrow(() ->
-                new ResourceNotFoundException("Customer not found for mobile number: " + mobileNumber)
+                new ResourceNotFoundException("Account not found for mobile number: " + mobileNumber)
         );
 
         AccountData accountData = AccountDataMapper.toData(accountEntity);
