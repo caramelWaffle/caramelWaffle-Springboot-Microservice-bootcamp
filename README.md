@@ -236,3 +236,36 @@
     - Set the container name to `gateway-server`
     - Set the ports to `8072:8072`
     - Set the networks to `wafflebank-network`
+
+
+---
+
+### Chapter 7: Make Microservices Resilient using Circuit Breaker
+- When one microservice is down, it can cause a cascading failure in the entire system. We can prevent this by using
+  fallback mechanisms and circuit breakers.
+- `Resilience4j`: A lightweight fault tolerance library designed for Java applications, providing various patterns to
+  handle failures gracefully.
+  - **Circuit Breaker**: A design pattern that prevents a service from making requests to a failing service, allowing it to
+    recover and preventing cascading failures.
+    - States:
+      - **Closed**: Requests are allowed to pass through.
+      - **Open**: Requests are blocked, and fallback logic is executed.
+      - **Half-Open**: A limited number of requests are allowed to test if the service has recovered.
+  - **Fallback**: Alternative logic that is executed when a service call fails, providing a graceful degradation of functionality.
+  - **Retry**: Automatically retrying a failed request a certain number of times before giving up.
+  - **Rate Limiting**: Limiting the number of requests a service can handle in a given time period to prevent overload.
+  - **Bulkhead**: Limit the number of concurrent requests to a service, isolating it from other services.
+- Import `spring-cloud-starter-circuitbreaker-reactor-resilience4j` dependency to `pom.xml`
+- Adding resilience4j configuration to `application.yml`
+    ```# Resilience4j configuration
+    resilience4j.circuitbreaker.configs.default.slidingWindowSize=10
+    resilience4j.circuitbreaker.configs.default.permittedNumberOfCallsInHalfOpenState=2
+    resilience4j.circuitbreaker.configs.default.failureRateThreshold=50
+    resilience4j.circuitbreaker.configs.default.waitDurationInOpenState=10000
+- Adding Circuit Breaker filter to the API Gateway
+    ``.circuitBreaker(config -> config.setName("cardsCircuitBreaker"))``
+- When service is down, the API Gateway will return a fallback response (`"500 Service is currently unavailable"`).
+- When the service is up, the API Gateway will return the actual response from the service.
+- See the events log via `http://localhost:8072/actuator/circuitbreakerevents?name=accountsCircuitBreaker`
+- See the state of the circuit breaker via `http://localhost:8072/actuator/circuitbreakers`
+
