@@ -264,8 +264,16 @@
     resilience4j.circuitbreaker.configs.default.waitDurationInOpenState=10000
 - Adding Circuit Breaker filter to the API Gateway
     ``.circuitBreaker(config -> config.setName("cardsCircuitBreaker"))``
-- When service is down, the API Gateway will return a fallback response (`"500 Service is currently unavailable"`).
-- When the service is up, the API Gateway will return the actual response from the service.
-- See the events log via `http://localhost:8072/actuator/circuitbreakerevents?name=accountsCircuitBreaker`
-- See the state of the circuit breaker via `http://localhost:8072/actuator/circuitbreakers`
-
+  - When service is down, the API Gateway will return a fallback response (`"500 Service is currently unavailable"`).
+  - When the service is up, the API Gateway will return the actual response from the service.
+  - See the events log via `http://localhost:8072/actuator/circuitbreakerevents?name=accountsCircuitBreaker`
+  - See the state of the circuit breaker via `http://localhost:8072/actuator/circuitbreakers`
+- Adding Circuit Breaker to Feign Client
+     - Adding `spring-cloud-starter-circuitbreaker-resilience4j` to `pom.xml` of Accounts microservice
+     - Add `@CircuitBreaker` annotation to the Feign Client method
+     - Define a fallback method to handle failures
+     - Example:
+       ```java
+       @FeignClient(name = "loans", fallback = LoansFallback.class)
+       @FeignClient(name = "card", fallback = CardsFallback.class)
+       ```
