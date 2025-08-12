@@ -277,3 +277,7 @@
        @FeignClient(name = "loans", fallback = LoansFallback.class)
        @FeignClient(name = "card", fallback = CardsFallback.class)
        ```
+- Configure HTTP client timeouts on Gateway server 
+
+  - set `spring.cloud.gateway.server.webflux.httpclient.connect-timeout=5000`
+  - set `spring.cloud.gateway.server.webflux.httpclient.response-timeout=5000`
