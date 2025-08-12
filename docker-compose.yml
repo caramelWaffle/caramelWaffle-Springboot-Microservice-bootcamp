@@ -1,5 +1,5 @@
 services:
-  # Account Database
+# Redis
   redis:
     image: redis
     ports:
@@ -10,6 +10,7 @@ services:
       retries: 10
     networks:
       - waffle
+# Account Database
   account-db:
     image: mysql
     container_name: account-db
