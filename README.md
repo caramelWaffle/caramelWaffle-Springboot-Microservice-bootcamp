@@ -277,7 +277,13 @@
        @FeignClient(name = "loans", fallback = LoansFallback.class)
        @FeignClient(name = "card", fallback = CardsFallback.class)
        ```
-- Configure HTTP client timeouts on Gateway server 
-
+- Configure HTTP client timeouts on Gateway server
   - set `spring.cloud.gateway.server.webflux.httpclient.connect-timeout=5000`
   - set `spring.cloud.gateway.server.webflux.httpclient.response-timeout=5000`
+- Adding Retry mechanism to the API Gateway
+  - Use `retry` filter in the route configuration
+  - Example:
+    ```
+    filter(retry(config -> config.setRetries(3).setMethods(HttpMethod.GET)))
+    ```
+  - This will retry the request up to 3 times for GET requests if the service is down.
