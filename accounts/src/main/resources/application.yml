@@ -61,7 +61,12 @@ resilience4j.retry:
       waitDuration: 1000ms
       enableExponentialBackoff: true
       exponentialBackoffMultiplier: 2.0
-      ignoreExceptions:
-        - java.lang.nullPointerException
       retryExceptions:
         - java.util.concurrent.TimeoutException
+
+resilience4j.rate-limiter:
+  configs:
+    default:
+      timeoutDuration: 1000
+      limitRefreshPeriod: 5000
+      limitForPeriod: 1

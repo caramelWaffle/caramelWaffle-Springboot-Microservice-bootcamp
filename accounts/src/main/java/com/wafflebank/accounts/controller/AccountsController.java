@@ -5,6 +5,7 @@ import com.wafflebank.accounts.model.build.BuildInfo;
 import com.wafflebank.accounts.model.customer.CustomerData;
 import com.wafflebank.accounts.model.network.ResponseData;
 import com.wafflebank.accounts.service.AccountService;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -232,7 +233,8 @@ public class AccountsController {
                     @ApiResponse(responseCode = "500", description = "Internal server error")
             }
     )
-    @Retry(name = "getBuildInformation", fallbackMethod = "getBuildInformationFallback")
+//    @Retry(name = "getBuildInformation", fallbackMethod = "getBuildInformationFallback")
+    @RateLimiter(name = "getBuildInformation")
     @GetMapping("/build-info")
     public ResponseEntity<BuildInfo> getBuildInformation() {
         HttpStatus status = HttpStatus.OK;
