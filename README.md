@@ -288,3 +288,10 @@
     ```
   - This will retry the request up to 3 times for GET requests if the service is down.
   - Implement retry ignoreExceptions and retryExceptions
+- Rate Limiting using `Redis`
+  - Is a technique to control the amount of incoming requests to a service, preventing it from being overwhelmed.
+  - Resource and performance management preventing service overload.
+  - Adding `spring-boot-starter-data-redis-reactive` on gatewayserver `pom.xml`
+  - Adding ```.requestRateLimiter(config -> config.setRateLimiter(redisRateLimiter()).setKeyResolver(userKeyResolver()))``` on gateway filter
+  - run redis via docker
+    - `docker run -p 6379:6379 --name wafflebankredis -d redis`
