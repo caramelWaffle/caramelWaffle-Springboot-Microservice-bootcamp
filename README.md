@@ -295,3 +295,5 @@
   - Adding ```.requestRateLimiter(config -> config.setRateLimiter(redisRateLimiter()).setKeyResolver(userKeyResolver()))``` on gateway filter
   - run redis via docker
     - `docker run -p 6379:6379 --name wafflebankredis -d redis`
+- ***Aspect Order***
+  - `6. Retry (5. Circuit Breaker (4. Rate Limiter (3. TimeLimiter (2. Bulkhead (1. Function))))))`

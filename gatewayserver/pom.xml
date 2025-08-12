@@ -91,7 +91,7 @@
 				<version>3.4.6</version>
 				<configuration>
 					<to>
-						<image>kodomochi/${project.artifactId}:v6</image>
+						<image>kodomochi/${project.artifactId}:v7</image>
 					</to>
 				</configuration>
 			</plugin>
