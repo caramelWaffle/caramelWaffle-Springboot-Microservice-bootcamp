@@ -5,6 +5,7 @@ import com.wafflebank.accounts.model.build.BuildInfo;
 import com.wafflebank.accounts.model.customer.CustomerData;
 import com.wafflebank.accounts.model.network.ResponseData;
 import com.wafflebank.accounts.service.AccountService;
+import io.github.resilience4j.retry.annotation.Retry;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -20,11 +21,15 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.logging.Logger;
+
 @Tag(name = "AccountsController", description = "Controller for managing account operations")
 @RefreshScope
 @RestController
 @RequestMapping(path = "/api", produces = {MediaType.APPLICATION_JSON_VALUE})
 public class AccountsController {
+
+    private Logger logger = Logger.getLogger(AccountsController.class.getName());
 
     @Value("${build.version}")
     private String buildVersion;
@@ -227,6 +232,7 @@ public class AccountsController {
                     @ApiResponse(responseCode = "500", description = "Internal server error")
             }
     )
+    @Retry(name = "getBuildInformation", fallbackMethod = "getBuildInformationFallback")
     @GetMapping("/build-info")
     public ResponseEntity<BuildInfo> getBuildInformation() {
         HttpStatus status = HttpStatus.OK;
@@ -234,6 +240,19 @@ public class AccountsController {
         BuildInfo body = BuildInfo.builder()
                 .version(buildVersion)
                 .javaVersion(environment.getProperty("java.version"))
+                .build();
+
+//        throw new NullPointerException("Simulated exception for testing fallback");
+        return ResponseEntity.status(status).body(body);
+    }
+
+    public ResponseEntity<BuildInfo> getBuildInformationFallback(Throwable throwable) {
+        logger.info("Fallback method called for getBuildInformation: " + throwable.getMessage());
+        HttpStatus status = HttpStatus.OK;
+
+        BuildInfo body = BuildInfo.builder()
+                .version("unknown")
+                .javaVersion("0.9")
                 .build();
 
         return ResponseEntity.status(status).body(body);
