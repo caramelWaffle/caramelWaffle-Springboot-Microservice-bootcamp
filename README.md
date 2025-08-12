@@ -287,3 +287,4 @@
     filter(retry(config -> config.setRetries(3).setMethods(HttpMethod.GET)))
     ```
   - This will retry the request up to 3 times for GET requests if the service is down.
+  - Implement retry ignoreExceptions and retryExceptions
